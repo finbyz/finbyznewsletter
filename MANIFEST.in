@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include finbyznewsletter *.css
+recursive-include finbyznewsletter *.csv
+recursive-include finbyznewsletter *.html
+recursive-include finbyznewsletter *.ico
+recursive-include finbyznewsletter *.js
+recursive-include finbyznewsletter *.json
+recursive-include finbyznewsletter *.md
+recursive-include finbyznewsletter *.png
+recursive-include finbyznewsletter *.py
+recursive-include finbyznewsletter *.svg
+recursive-include finbyznewsletter *.txt
+recursive-exclude finbyznewsletter *.pyc

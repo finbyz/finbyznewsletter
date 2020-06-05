@@ -1,0 +1,19 @@
+{
+ "content": null,
+ "creation": "2020-06-05 12:20:42.825998",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2020-06-05 12:20:42.825998",
+ "modified_by": "Administrator",
+ "module": "Finbyznewsletter",
+ "name": "newsletter-editor",
+ "owner": "Administrator",
+ "page_name": "newsletter-editor",
+ "roles": [],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "Newsletter Editor"
+}
