@@ -7,13 +7,13 @@ const template = {
 	docname: null,
 	mjml: '<mjml><mj-body></mj-body></mjml>',
 	fullScreen: 0,
-	response: null
+	response: null,
 
 }
 
 
 frappe.pages['newsletter-editor'].on_page_load = function (wrapper) {
-	var page = frappe.ui.make_app_page({
+	let page = frappe.ui.make_app_page({
 		parent: wrapper,
 		title: 'Newsletter Editor',
 		single_column: true
@@ -71,18 +71,18 @@ frappe.pages['newsletter-editor'].on_page_load = function (wrapper) {
 
 function createGrape(template) {
 	if (template.mjml == null || template.mjml == "") {
-		template.mjml = '<mjml><mj-body><mj-section><mj-column><mj-text>'+ template.response +'</mj-text></mj-column></mj-section></mj-body></mjml>'
-		
+		template.mjml = '<mjml><mj-body><mj-section><mj-column><mj-text>' + template.response + '</mj-text></mj-column></mj-section></mj-body></mjml>'
+
 	}
 	var editor = grapesjs.init({
 		container: '#gjs',
 		plugins: ['grapesjs-mjml'],
 		pluginsOpts: {
 			'grapesjs-mjml': {
-				/* ...options */ },
-
+				/* ...options */
+			},
 		},
-		components:  template.mjml,
+		components: template.mjml,
 		colorPicker: {
 			appendTo: 'parent',
 			offset: {
@@ -93,10 +93,30 @@ function createGrape(template) {
 		storageManager: {
 			type: null
 		},
-		assetManager: {
-			upload: '/files/',
-		}
+
+
 	});
+	
+
+    // editor.DomComponents.addType("image", {
+    //     model: {
+    //         defaults: {
+
+    //             traits: [
+    //                 {
+    //                     type: "checkbox",
+    //                     label: "Test",
+    //                     name: "test",
+	// 					changeProp: 1,
+	// 					src: 'https://www.w3schools.com/css/img_5terre.jpg'
+    //                 },
+    //                 "alt"
+    //             ]
+    //         }
+    //     }
+    // });
+
+
 	editor.Panels.getButton('views', 'open-blocks').set('active', true)
 
 	editor.RichTextEditor.remove('custom-vars')
@@ -118,31 +138,34 @@ function createGrape(template) {
 		select.append('<option style="color: #000" value=' + element + '>' + element + '</option>')
 	})
 
+
 	editor.Panels.addButton('options', [{
 		id: 'save',
 		className: 'fa fa-floppy-o icon-blank',
 		command: function (editor1, sender) {
-			console.log(editor.getComponents())
-			console.log(editor.getStyle())
-			console.log(editor.getCss())
-			if (editor.getHtml()) {
-				frappe.db.set_value('Email Template', template.docname, 'mjml', editor.getHtml())
-				frappe.db.set_value('Email Template', template.docname, 'html', editor.runCommand('mjml-get-code').html)
-				frappe.db.set_value('Email Template', template.docname, 'response', editor.runCommand('mjml-get-code').html)
-			}
-
-			if (editor.getComponents()) {
-				frappe.db.set_value('Email Template', template.docname, 'components', JSON.stringify(editor.getComponents()))
-			}
-
-			if (editor.getStyle()) {
-				frappe.db.set_value('Email Template', template.docname, 'style', JSON.stringify(editor.getStyle()))
-			}
+			let html = editor.runCommand('mjml-get-code').html
+			let mjml = editor.getHtml()
+			let style = JSON.stringify(editor.getStyle())
+			let components = JSON.stringify(editor.getComponents())
+			console.log(html)
+			frappe.call({
+				method: "finbyznewsletter.finbyznewsletter.page.newsletter_editor.newsletter_editor.save_template",
+				args: {
+					'html': html,
+					'mjml': mjml,
+					'components': components,
+					'style': style,
+					'template': template.docname
+				}, callback: function (r) {
+					console.log(r.message)
+				}
+			})
+			//doc.save()
 		},
 		attributes: {
 			title: 'Save Template'
 		}
-	}, ]);
+	},]);
 }
 
 

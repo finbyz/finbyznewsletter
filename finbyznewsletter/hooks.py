@@ -13,6 +13,17 @@ app_license = "GPL 3.0"
 
 fixtures = ["Custom Field"]
 
+#import frappe
+# from frappe.email.doctype.newsletter.newsletter import Newsletter
+
+# from finbyznewsletter.api import queue_all as my_queue_all, get_recipients as my_get_recipients
+
+# Newsletter.queue_all = my_queue_all
+# Newsletter.get_recipients = my_get_recipients
+
+doctype_js = {
+	'Email Group': 'public/js/doctype_js/email_group.js",'
+}
 
 # Includes in <head>
 # ------------------
